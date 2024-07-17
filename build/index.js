@@ -1,0 +1,22 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+console.log('Olá TypeScript');
+const cliente_1 = require("./cliente");
+const conta_1 = require("./conta");
+console.log('Iniciando a aplicação...');
+const cliente1 = new cliente_1.Cliente(1, "João da Silva", "Rua A, 123", "12345-6789");
+console.log(cliente1);
+const contaCorrente1 = new conta_1.ContaCorrente(1001, 500, 1000);
+console.log(contaCorrente1);
+const contaPoupanca1 = new conta_1.ContaPoupanca(2001, 1000, 0.5);
+console.log(contaPoupanca1);
+cliente1['contas'] = [contaCorrente1, contaPoupanca1]; // Adicionando contas ao cliente
+console.log(cliente1);
+contaCorrente1.depositar(200);
+console.log(contaCorrente1);
+contaCorrente1.sacar(100);
+console.log(contaCorrente1);
+contaCorrente1.transferir(200, contaPoupanca1);
+contaPoupanca1.aplicarJuros();
+console.log(contaCorrente1);
+console.log(contaPoupanca1);
