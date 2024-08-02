@@ -1,5 +1,3 @@
-// src/conta-Corrente/conta-Corrente.module.ts
-
 import { Module } from '@nestjs/common';
 import { ContaCorrenteController } from './conta-corrente.controller';
 import { ContaCorrenteService } from './conta-corrente.service';

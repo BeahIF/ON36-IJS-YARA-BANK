@@ -1,20 +1,44 @@
-// src/conta-Poupanca/conta-Poupanca.controller.ts
-
 import { Controller, Post, Get, Body, Param, Put } from '@nestjs/common';
 import { ContaPoupancaService } from './conta-poupanca.service';
 import { ContaPoupanca } from 'src/conta.model';
+import { ClienteService } from 'src/cliente/cliente.service';
+import { GerenteService } from 'src/gerente/gerente.service';
 
 @Controller('conta-poupanca')
 export class ContaPoupancaController {
-  constructor(private readonly contaPoupancaService: ContaPoupancaService) {}
+  constructor(
+    private readonly contaPoupancaService: ContaPoupancaService,
+    private readonly clienteService: ClienteService,
+    private readonly gerenteService: GerenteService,
+  ) {}
   @Post('/criar')
   criarContaPoupanca(
-    @Body() contaDto: { numeroConta: number; saldo: number; taxaJuros: number },
+    @Body()
+    contaDto: {
+      numeroConta: number;
+      saldo: number;
+      taxaJuros: number;
+      clienteId: number;
+      gerenteId: number;
+    },
   ) {
+    const cliente = this.clienteService.obterCliente(contaDto.clienteId);
+    const gerente = this.gerenteService.obterGerente(contaDto.gerenteId);
+
+    if (!cliente) {
+      return { message: 'Cliente não encontrado' };
+    }
+
+    if (!gerente) {
+      return { message: 'Gerente não encontrado' };
+    }
+
     const conta = new ContaPoupanca(
       contaDto.numeroConta,
       contaDto.saldo,
       contaDto.taxaJuros,
+      cliente,
+      gerente,
     );
     this.contaPoupancaService.criarConta(conta);
     return {

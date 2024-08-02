@@ -1,15 +1,27 @@
+import { Cliente } from './cliente/cliente.model';
+import { Gerente } from './gerente/gerente.model';
+
 export interface IContaBancaria {
   numeroConta: number;
   saldo: number;
-  // aqui deve ir um clientId?
+  cliente: Cliente;
+  gerente: Gerente;
   depositar(valor: number): void;
   sacar(valor: number): boolean;
   transferir(valor: number, contaDestino: IContaBancaria): boolean;
 }
 
 abstract class ContaBancaria implements IContaBancaria {
-  constructor(public numeroConta: number, public saldo: number = 0) {}
+  constructor(
+    public numeroConta: number,
+    public saldo: number = 0,
+    public cliente: Cliente,
+    public gerente: Gerente,
+  ) {}
 
+  associarCliente(cliente: Cliente): void {
+    this.cliente = cliente;
+  }
   depositar(valor: number): void {
     if (valor <= 0) {
       throw new Error('O valor de depósito deve ser maior que zero.');
@@ -21,7 +33,6 @@ abstract class ContaBancaria implements IContaBancaria {
   }
 
   sacar(valor: number): boolean {
-    // aqui eu já devo fazer algum codigo?
     if (valor > this.saldo) {
       console.log('Saldo insuficiente');
       return false;
@@ -31,7 +42,6 @@ abstract class ContaBancaria implements IContaBancaria {
   }
 
   transferir(valor: number, contaDestino: IContaBancaria): boolean {
-    // aqui eu já devo fazer algum codigo?
     if (this.sacar(valor)) {
       contaDestino.depositar(valor);
       return true;
@@ -41,21 +51,28 @@ abstract class ContaBancaria implements IContaBancaria {
 }
 
 export class ContaCorrente extends ContaBancaria {
-  constructor(numeroConta: number, public limiteChequeEspecial: number) {
-    super(numeroConta);
+  constructor(
+    numeroConta: number,
+    public limiteChequeEspecial: number,
+    cliente: Cliente,
+    gerente: Gerente,
+  ) {
+    super(numeroConta, 0, cliente, gerente);
   }
-
-  // sacar(valor: number): boolean {
-  // aqui eu já devo fazer algum codigo?
-  // }
 }
 
 export class ContaPoupanca extends ContaBancaria {
-  constructor(numeroConta: number, saldo = 0, public taxaJuros: number) {
-    super(numeroConta, saldo);
+  constructor(
+    numeroConta: number,
+    saldo = 0,
+    public taxaJuros: number,
+    cliente: Cliente,
+    gerente: Gerente,
+  ) {
+    super(numeroConta, saldo, cliente, gerente);
   }
 
   aplicarJuros(): void {
-    // aqui eu já devo fazer algum codigo?
+    this.saldo += this.saldo * (this.taxaJuros / 100);
   }
 }

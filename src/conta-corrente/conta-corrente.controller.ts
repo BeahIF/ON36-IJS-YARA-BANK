@@ -1,20 +1,47 @@
-// src/conta-Corrente/conta-Corrente.controller.ts
-
 import { Controller, Post, Get, Body, Param, Put } from '@nestjs/common';
 import { ContaCorrente } from '../conta.model';
 import { ContaCorrenteService } from './conta-corrente.service';
+import { Cliente } from 'src/cliente/cliente.model';
+import { Gerente } from 'src/gerente/gerente.model';
+import { ClienteService } from 'src/cliente/cliente.service';
+import { GerenteService } from 'src/gerente/gerente.service';
 
 @Controller('conta-corrente')
 export class ContaCorrenteController {
-  constructor(private readonly contaCorrenteService: ContaCorrenteService) {}
+  constructor(
+    private readonly contaCorrenteService: ContaCorrenteService,
+    private readonly clienteService: ClienteService,
+    private readonly gerenteService: GerenteService,
+  ) {}
 
   @Post('/criar')
   criarConta(
-    @Body() contaDto: { numeroConta: number; limiteChequeEspecial: number },
+    @Body()
+    contaDto: {
+      numeroConta: number;
+      limiteChequeEspecial: number;
+      clienteId: number;
+      gerenteId: number;
+    },
   ) {
+    const cliente = this.clienteService.obterCliente(contaDto.clienteId);
+    console.log("cliente", cliente)
+    const gerente = this.gerenteService.obterGerente(contaDto.gerenteId);
+
+    if (!cliente) {
+      return { message: 'Cliente não encontrado' };
+    }
+
+    if (!gerente) {
+      return { message: 'Gerente não encontrado' };
+    }
+
+
     const conta = new ContaCorrente(
       contaDto.numeroConta,
       contaDto.limiteChequeEspecial,
+      cliente,
+      gerente,
     );
 
     this.contaCorrenteService.criarConta(conta as ContaCorrente);
