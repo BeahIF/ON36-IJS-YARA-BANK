@@ -3,8 +3,8 @@ import { ContaCorrente } from '../conta.model';
 import { ContaCorrenteService } from './conta-corrente.service';
 import { Cliente } from 'src/cliente/cliente.model';
 import { Gerente } from 'src/gerente/gerente.model';
-import { ClienteService } from 'src/cliente/cliente.service';
-import { GerenteService } from 'src/gerente/gerente.service';
+import { ClienteService } from './../cliente/cliente.service';
+import { GerenteService } from './../gerente/gerente.service';
 
 @Controller('conta-corrente')
 export class ContaCorrenteController {

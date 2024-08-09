@@ -12,8 +12,11 @@ export class ClienteService {
   }
 
   obterCliente(id: number): Cliente {
+    console.log("no obter cliente")
     console.log(this.clientes)
+    console.log(id)
     const cliente = this.clientes.find((c) => Number(c.id) === Number(id));
+  console.log(cliente)
     if (!cliente) {
       throw new NotFoundException('Cliente não encontrado');
     }
