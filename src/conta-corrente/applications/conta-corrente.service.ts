@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { ContaCorrente } from '../conta.model';
+import { ContaCorrente } from '../../conta.model';
+import { GeolocationAdapter } from '../adapters/geolocation/geolocation.adapter';
 
 @Injectable()
 export class ContaCorrenteService {
   private contas: ContaCorrente[] = [];
+  constructor(
+    private readonly geoService: GeolocationAdapter
 
+  ) {}
   criarConta(conta: ContaCorrente): void {
     if (conta instanceof ContaCorrente) {
       this.contas.push(conta);
@@ -30,7 +34,9 @@ export class ContaCorrenteService {
     }
   }
 
-  sacar(numeroConta: number, valor: number): boolean {
+  async sacar(numeroConta: number, valor: number): Promise<boolean> {
+    const location =await this.geoService.fetchLocation()
+    console.log(location)
     const conta = this.obterConta(numeroConta);
     if (conta) {
       return conta.sacar(valor);

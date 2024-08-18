@@ -1,5 +1,5 @@
-import { Cliente } from 'src/cliente/cliente.model';
-import { ContaCorrente, ContaPoupanca, IContaBancaria } from './../conta.model';
+import { Cliente } from 'src/cliente/adapters/outbound/cliente.model';
+import { ContaCorrente, ContaPoupanca, IContaBancaria } from 'src/conta.model';
 
 export class Gerente {
   constructor(public id: number, public nome: string) {}

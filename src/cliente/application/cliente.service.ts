@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Cliente } from './cliente.model';
 import { IContaBancaria } from 'src/conta.model';
+import { Cliente } from '../adapters/outbound/cliente.model';
 
 @Injectable()
 export class ClienteService {
@@ -12,11 +12,7 @@ export class ClienteService {
   }
 
   obterCliente(id: number): Cliente {
-    console.log("no obter cliente")
-    console.log(this.clientes)
-    console.log(id)
     const cliente = this.clientes.find((c) => Number(c.id) === Number(id));
-  console.log(cliente)
     if (!cliente) {
       throw new NotFoundException('Cliente não encontrado');
     }

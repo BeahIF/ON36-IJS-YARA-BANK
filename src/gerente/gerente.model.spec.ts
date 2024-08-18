@@ -1,6 +1,6 @@
-import { Gerente } from './gerente.model';
-import { Cliente } from '../cliente/cliente.model';
+import { Cliente } from '../cliente/adapters/outbound/cliente.model';
 import { ContaCorrente, ContaPoupanca } from '../conta.model';
+import { Gerente } from './adapters/outbound/gerente.model';
 
 describe('Gerente', () => {
   let gerente: Gerente;

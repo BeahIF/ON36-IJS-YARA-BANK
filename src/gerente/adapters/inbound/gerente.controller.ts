@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { GerenteService } from './gerente.service';
-import { Gerente } from './gerente.model';
+import { GerenteService } from 'src/gerente/application/gerente.service';
+import { Gerente } from '../outbound/gerente.model';
+
 
 @Controller('gerentes')
 export class GerenteController {

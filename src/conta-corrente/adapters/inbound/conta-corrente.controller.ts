@@ -1,10 +1,9 @@
 import { Controller, Post, Get, Body, Param, Put } from '@nestjs/common';
-import { ContaCorrente } from '../conta.model';
-import { ContaCorrenteService } from './conta-corrente.service';
-import { Cliente } from 'src/cliente/cliente.model';
-import { Gerente } from 'src/gerente/gerente.model';
-import { ClienteService } from './../cliente/cliente.service';
-import { GerenteService } from './../gerente/gerente.service';
+import { ContaCorrente } from '../../../conta.model';
+import { ContaCorrenteService } from '../../applications/conta-corrente.service';
+import { GerenteService } from '../../../gerente/application/gerente.service';
+import { ClienteService } from '../../../cliente/application/cliente.service'
+
 
 @Controller('conta-corrente')
 export class ContaCorrenteController {

@@ -1,8 +1,8 @@
 import { Controller, Post, Get, Body, Param, Put } from '@nestjs/common';
-import { ContaPoupancaService } from './conta-poupanca.service';
-import { ContaPoupanca } from './../conta.model';
-import { ClienteService } from './../cliente/cliente.service';
-import { GerenteService } from './../gerente/gerente.service';
+import { ContaPoupancaService } from '../../application/conta-poupanca.service';
+import { ContaPoupanca } from '../../../conta.model';
+import { GerenteService } from '../../../gerente/application/gerente.service';
+import { ClienteService } from 'src/cliente/application/cliente.service';
 
 @Controller('conta-poupanca')
 export class ContaPoupancaController {

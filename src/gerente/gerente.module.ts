@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { GerenteController } from './gerente.controller';
-import { GerenteService } from './gerente.service';
+import { GerenteService } from './application/gerente.service';
+import { GerenteController } from './adapters/inbound/gerente.controller';
 
 @Module({
   controllers: [GerenteController],

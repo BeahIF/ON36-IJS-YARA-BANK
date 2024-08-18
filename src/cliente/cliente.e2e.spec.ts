@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { ClienteModule } from './cliente.module';
-import { ClienteService } from './cliente.service';
-import { Cliente } from './cliente.model';
+import { Cliente } from './adapters/outbound/cliente.model';
+import { ClienteService } from './application/cliente.service';
 
 describe('ClienteController (integração)', () => {
   let app: INestApplication;

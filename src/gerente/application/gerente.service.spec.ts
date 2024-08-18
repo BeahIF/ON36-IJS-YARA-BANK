@@ -1,5 +1,5 @@
+import { Gerente } from '../adapters/outbound/gerente.model';
 import { GerenteService } from './gerente.service';
-import { Gerente } from './gerente.model';
 import { NotFoundException } from '@nestjs/common';
 
 describe('GerenteService', () => {

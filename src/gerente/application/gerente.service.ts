@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Gerente } from './gerente.model';
+import { Gerente } from '../adapters/outbound/gerente.model';
 @Injectable()
 export class GerenteService {
   private gerentes: Gerente[] = [];

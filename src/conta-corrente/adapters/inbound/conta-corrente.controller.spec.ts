@@ -1,41 +1,40 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ContaPoupancaController } from './conta-poupanca.controller';
-import { ContaPoupancaService } from './conta-poupanca.service';
-import { ClienteService } from '../cliente/cliente.service';
-import { GerenteService } from '../gerente/gerente.service';
-import { ContaPoupanca } from '../conta.model';
-import { Cliente } from '../cliente/cliente.model';
-import { Gerente } from '../gerente/gerente.model';
+import { ContaCorrenteController } from './conta-corrente.controller';
+import { ContaCorrenteService } from '../../applications/conta-corrente.service';
+import { GerenteService } from '../../../gerente/application/gerente.service';
+import { ContaCorrente } from '../../../conta.model';
+import { Cliente } from '../../../cliente/adapters/outbound/cliente.model';
+import { ClienteService } from 'src/cliente/application/cliente.service';
+import { Gerente } from 'src/gerente/adapters/outbound/gerente.model';
 
-describe('ContaPoupancaController', () => {
-  let controller: ContaPoupancaController;
-  let service: ContaPoupancaService;
+describe('ContaCorrenteController', () => {
+  let controller: ContaCorrenteController;
+  let service: ContaCorrenteService;
   let clienteService: ClienteService;
   let gerenteService: GerenteService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [ContaPoupancaController],
+      controllers: [ContaCorrenteController],
       providers: [
-        ContaPoupancaService,
+        ContaCorrenteService,
         ClienteService,
         GerenteService,
       ],
     }).compile();
 
-    controller = module.get<ContaPoupancaController>(ContaPoupancaController);
-    service = module.get<ContaPoupancaService>(ContaPoupancaService);
+    controller = module.get<ContaCorrenteController>(ContaCorrenteController);
+    service = module.get<ContaCorrenteService>(ContaCorrenteService);
     clienteService = module.get<ClienteService>(ClienteService);
     gerenteService = module.get<GerenteService>(GerenteService);
   });
 
-  it('deve criar uma conta poupança', () => {
+  it('deve criar uma conta corrente', () => {
     const cliente = new Cliente(1, 'Beatriz');
     const gerente = new Gerente(1, 'Carlos');
     const contaDto = {
       numeroConta: 123,
-      saldo: 1000,
-      taxaJuros: 0.05,
+      limiteChequeEspecial: 500,
       clienteId: 1,
       gerenteId: 1,
     };
@@ -44,17 +43,15 @@ describe('ContaPoupancaController', () => {
     jest.spyOn(gerenteService, 'obterGerente').mockReturnValue(gerente);
     jest.spyOn(service, 'criarConta').mockImplementation(() => {});
 
-    const result = controller.criarContaPoupanca(contaDto);
-    expect(result).toEqual({
-      message: `Conta Poupança ${contaDto.numeroConta} criada com sucesso.`,
-    });
+    const result = controller.criarConta(contaDto);
+    expect(result).toEqual({ message: 'Conta criada com sucesso' });
     expect(clienteService.obterCliente).toHaveBeenCalledWith(contaDto.clienteId);
     expect(gerenteService.obterGerente).toHaveBeenCalledWith(contaDto.gerenteId);
-    expect(service.criarConta).toHaveBeenCalledWith(expect.any(ContaPoupanca));
+    expect(service.criarConta).toHaveBeenCalledWith(expect.any(ContaCorrente));
   });
 
-  it('deve obter uma conta poupança pelo número', () => {
-    const conta = new ContaPoupanca(123, 1000, 0.05, new Cliente(1, 'Beatriz'), new Gerente(1, 'Carlos'));
+  it('deve obter uma conta corrente pelo número', () => {
+    const conta = new ContaCorrente(123, 500, new Cliente(1, 'Beatriz'), new Gerente(1, 'Carlos'));
     jest.spyOn(service, 'obterConta').mockReturnValue(conta);
 
     const result = controller.obterConta(123);
@@ -63,7 +60,7 @@ describe('ContaPoupancaController', () => {
   });
 
   it('deve realizar um depósito', () => {
-    const conta = new ContaPoupanca(123, 1000, 0.05, new Cliente(1, 'Beatriz'), new Gerente(1, 'Carlos'));
+    const conta = new ContaCorrente(123, 500, new Cliente(1, 'Beatriz'), new Gerente(1, 'Carlos'));
     jest.spyOn(service, 'obterConta').mockReturnValue(conta);
     jest.spyOn(service, 'depositar').mockImplementation(() => {});
 
@@ -73,9 +70,9 @@ describe('ContaPoupancaController', () => {
   });
 
   it('deve realizar um saque', () => {
-    const conta = new ContaPoupanca(123, 1000, 0.05, new Cliente(1, 'Beatriz'), new Gerente(1, 'Carlos'));
+    const conta = new ContaCorrente(123, 500, new Cliente(1, 'Beatriz'), new Gerente(1, 'Carlos'));
     jest.spyOn(service, 'obterConta').mockReturnValue(conta);
-    jest.spyOn(service, 'sacar').mockReturnValue(true);
+    // jest.spyOn(service, 'sacar').mockReturnValue(true);
 
     const result = controller.sacar(123, 100);
     expect(result).toEqual({ message: 'Saque realizado com sucesso' });
@@ -83,8 +80,8 @@ describe('ContaPoupancaController', () => {
   });
 
   it('deve realizar uma transferência', () => {
-    const contaOrigem = new ContaPoupanca(123, 1000, 0.05, new Cliente(1, 'Beatriz'), new Gerente(1, 'Carlos'));
-    const contaDestino = new ContaPoupanca(456, 1000, 0.05, new Cliente(2, 'Ana'), new Gerente(1, 'Carlos'));
+    const contaOrigem = new ContaCorrente(123, 500, new Cliente(1, 'Beatriz'), new Gerente(1, 'Carlos'));
+    const contaDestino = new ContaCorrente(456, 1000, new Cliente(2, 'Ana'), new Gerente(1, 'Carlos'));
     jest.spyOn(service, 'obterConta').mockImplementation((numeroConta) => 
       numeroConta === 123 ? contaOrigem : contaDestino
     );

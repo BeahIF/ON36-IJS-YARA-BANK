@@ -1,6 +1,9 @@
-import { Cliente } from './cliente/cliente.model';
-import { Gerente } from './gerente/gerente.model';
-
+import { Cliente } from './cliente/adapters/outbound/cliente.model';
+import { Gerente } from './gerente/adapters/outbound/gerente.model';
+// adapters serve para se comunicar com o mundo exterior
+// adaptadores implementam interfaces definidas pelas portas
+//portas definem as regras de saida
+//adaptador transforma o objeto para seguir as regras
 export interface IContaBancaria {
   numeroConta: number;
   saldo: number;
