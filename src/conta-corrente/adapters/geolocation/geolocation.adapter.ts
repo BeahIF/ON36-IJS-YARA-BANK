@@ -4,7 +4,7 @@ import { GeolocationPort } from 'src/conta-corrente/domain/ports/geolocation.por
 
 export class GeolocationAdapter implements GeolocationPort {
   async fetchLocation(): Promise<any> {
-    const response = await axios.get('https://api.ipgeolocation.io/ipgeo?apiKey=23a816b485cb4dff814c4a70bba48464&ip=8.8.8.8');
+    const response = await axios.get('https://api.ipgeolocation.io/ipgeo?apiKey=&ip=8.8.8.8');
     return response?.data
   }
 }
