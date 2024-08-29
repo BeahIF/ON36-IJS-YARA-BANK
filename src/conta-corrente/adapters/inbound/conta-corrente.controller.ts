@@ -3,6 +3,7 @@ import { ContaCorrente } from '../../../conta.model';
 import { ContaCorrenteService } from '../../applications/conta-corrente.service';
 import { GerenteService } from '../../../gerente/application/gerente.service';
 import { ClienteService } from '../../../cliente/application/cliente.service'
+import { Cliente } from 'src/cliente/adapters/outbound/cliente.model';
 
 
 @Controller('conta-corrente')
@@ -39,7 +40,7 @@ export class ContaCorrenteController {
     const conta = new ContaCorrente(
       contaDto.numeroConta,
       contaDto.limiteChequeEspecial,
-      cliente,
+      cliente as unknown as Cliente,
       gerente,
     );
 

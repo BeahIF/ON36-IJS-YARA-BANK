@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { ContaCorrente } from '../../conta.model';
 import { GeolocationAdapter } from '../adapters/geolocation/geolocation.adapter';
+import { ClienteService } from 'src/cliente/application/cliente.service';
 
 @Injectable()
 export class ContaCorrenteService {
+
   private contas: ContaCorrente[] = [];
   constructor(
+    private readonly clienteService: ClienteService,
     private readonly geoService: GeolocationAdapter
 
   ) {}

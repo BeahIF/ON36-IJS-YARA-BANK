@@ -21,7 +21,7 @@ describe('ClienteController', () => {
     const clienteDto = { id: 1, nome: 'Beatriz' };
     const cliente = new Cliente(clienteDto.id, clienteDto.nome);
 
-    jest.spyOn(service, 'adicionarCliente').mockReturnValue(cliente);
+    jest.spyOn(service, 'adicionarCliente').mockResolvedValue(undefined);
 
     const result = controller.criarCliente(clienteDto);
     expect(result).toEqual({ message: `Cliente ${cliente.nome} criado com sucesso.` });
@@ -30,7 +30,7 @@ describe('ClienteController', () => {
 
   it('deve obter um cliente pelo ID', () => {
     const cliente = new Cliente(1, 'Beatriz');
-    jest.spyOn(service, 'obterCliente').mockReturnValue(cliente);
+    jest.spyOn(service, 'obterCliente').mockResolvedValue(cliente);
 
     const result = controller.obterCliente(1);
     expect(result).toBe(cliente);

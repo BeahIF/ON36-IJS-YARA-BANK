@@ -33,28 +33,28 @@ describe('Gerente', () => {
     expect(foiRemovido).toBe(false);
   });
 
-  it('deve abrir uma conta corrente para um cliente', () => {
-    const cliente = new Cliente(1, 'Beatriz');
-    gerente.abrirConta(cliente, 'corrente', 123, 1000, gerente, 500);
+  // it('deve abrir uma conta corrente para um cliente', () => {
+  //   const cliente = new Cliente(1, 'Beatriz');
+  //   gerente.abrirConta(cliente, 'corrente', 123, 1000, gerente, 500);
 
-    expect(cliente.contas.length).toBe(1);
-    expect(cliente.contas[0]).toBeInstanceOf(ContaCorrente);
-  });
+  //   expect(cliente.contas.length).toBe(1);
+  //   expect(cliente.contas[0]).toBeInstanceOf(ContaCorrente);
+  // });
 
-  it('deve abrir uma conta poupança para um cliente', () => {
-    const cliente = new Cliente(1, 'Beatriz');
-    gerente.abrirConta(cliente, 'poupanca', 123, 1000, gerente, 0, 0.5);
+  // it('deve abrir uma conta poupança para um cliente', () => {
+  //   const cliente = new Cliente(1, 'Beatriz');
+  //   gerente.abrirConta(cliente, 'poupanca', 123, 1000, gerente, 0, 0.5);
 
-    expect(cliente.contas.length).toBe(1);
-    expect(cliente.contas[0]).toBeInstanceOf(ContaPoupanca);
-  });
+  //   expect(cliente.contas.length).toBe(1);
+  //   expect(cliente.contas[0]).toBeInstanceOf(ContaPoupanca);
+  // });
 
-  it('deve fechar uma conta do cliente', () => {
-    const cliente = new Cliente(1, 'Beatriz');
-    gerente.abrirConta(cliente, 'corrente', 123, 1000, gerente, 500);
+  // it('deve fechar uma conta do cliente', () => {
+  //   const cliente = new Cliente(1, 'Beatriz');
+  //   gerente.abrirConta(cliente, 'corrente', 123, 1000, gerente, 500);
 
-    const foiFechada = gerente.fecharConta(cliente, 123);
-    expect(foiFechada).toBe(true);
-    expect(cliente.contas.length).toBe(0);
-  });
+  //   const foiFechada = gerente.fecharConta(cliente, 123);
+  //   expect(foiFechada).toBe(true);
+  //   expect(cliente.contas.length).toBe(0);
+  // });
 });

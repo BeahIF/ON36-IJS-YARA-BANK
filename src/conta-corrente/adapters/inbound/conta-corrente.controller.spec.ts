@@ -39,7 +39,7 @@ describe('ContaCorrenteController', () => {
       gerenteId: 1,
     };
 
-    jest.spyOn(clienteService, 'obterCliente').mockReturnValue(cliente);
+    jest.spyOn(clienteService, 'obterCliente').mockResolvedValue(cliente);
     jest.spyOn(gerenteService, 'obterGerente').mockReturnValue(gerente);
     jest.spyOn(service, 'criarConta').mockImplementation(() => {});
 

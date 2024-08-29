@@ -3,6 +3,7 @@ import { ContaPoupancaService } from '../../application/conta-poupanca.service';
 import { ContaPoupanca } from '../../../conta.model';
 import { GerenteService } from '../../../gerente/application/gerente.service';
 import { ClienteService } from 'src/cliente/application/cliente.service';
+import { Cliente } from 'src/cliente/adapters/outbound/cliente.model';
 
 @Controller('conta-poupanca')
 export class ContaPoupancaController {
@@ -12,7 +13,7 @@ export class ContaPoupancaController {
     private readonly gerenteService: GerenteService,
   ) {}
   @Post('/criar')
-  criarContaPoupanca(
+  async criarContaPoupanca(
     @Body()
     contaDto: {
       numeroConta: number;
@@ -22,8 +23,8 @@ export class ContaPoupancaController {
       gerenteId: number;
     },
   ) {
-    const cliente = this.clienteService.obterCliente(contaDto.clienteId);
-    const gerente = this.gerenteService.obterGerente(contaDto.gerenteId);
+    const cliente = await this.clienteService.obterCliente(contaDto.clienteId);
+    const gerente =  this.gerenteService.obterGerente(contaDto.gerenteId);
 
     if (!cliente) {
       return { message: 'Cliente não encontrado' };
@@ -37,7 +38,7 @@ export class ContaPoupancaController {
       contaDto.numeroConta,
       contaDto.saldo,
       contaDto.taxaJuros,
-      cliente,
+      cliente as unknown as Cliente,
       gerente,
     );
     this.contaPoupancaService.criarConta(conta);
