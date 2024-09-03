@@ -20,7 +20,6 @@ export class ContaEntity {
     cliente_id: string;
 
     @ManyToOne(() => ClienteEntity, (cliente) => cliente.contas, { onDelete: 'CASCADE' })
-    // @JoinColumn({ name: 'cliente_id' })
     cliente: ClienteEntity;
     
     @Column({ type: 'uuid' })

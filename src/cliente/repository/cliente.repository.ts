@@ -1,4 +1,4 @@
-import { ClienteEntity } from "src/db/entities/cliente.entity";
+import { ClienteEntity } from "../../db/entities/cliente.entity";
 import { Cliente } from "../adapters/outbound/cliente.model";
 
 export abstract class ClienteRepository {
