@@ -3,35 +3,35 @@ import { ContaCorrente, ContaPoupanca } from '../conta.model';
 import { Gerente } from './adapters/outbound/gerente.model';
 
 describe('Gerente', () => {
-  let gerente: Gerente;
-  let clientes: Cliente[];
+  // let gerente: Gerente;
+  // let clientes: Cliente[];
 
-  beforeEach(() => {
-    gerente = new Gerente(1, 'Carlos');
-    clientes = [];
-  });
+  // beforeEach(() => {
+  //   gerente = new Gerente(1, 'Carlos');
+  //   clientes = [];
+  // });
 
-  it('deve adicionar um cliente', () => {
-    const cliente = new Cliente(1, 'Beatriz');
-    gerente.adicionarCliente(cliente, clientes);
+  // it('deve adicionar um cliente', () => {
+  //   const cliente = new Cliente(1, 'Beatriz');
+  //   gerente.adicionarCliente(cliente, clientes);
 
-    expect(clientes.length).toBe(1);
-    expect(clientes[0]).toBe(cliente);
-  });
+  //   expect(clientes.length).toBe(1);
+  //   expect(clientes[0]).toBe(cliente);
+  // });
 
-  it('deve remover um cliente', () => {
-    const cliente = new Cliente(1, 'Beatriz');
-    gerente.adicionarCliente(cliente, clientes);
+  // it('deve remover um cliente', () => {
+  //   const cliente = new Cliente(1, 'Beatriz');
+  //   gerente.adicionarCliente(cliente, clientes);
 
-    const foiRemovido = gerente.removerCliente(1, clientes);
-    expect(foiRemovido).toBe(true);
-    expect(clientes.length).toBe(0);
-  });
+  //   const foiRemovido = gerente.removerCliente(1, clientes);
+  //   expect(foiRemovido).toBe(true);
+  //   expect(clientes.length).toBe(0);
+  // });
 
-  it('não deve remover um cliente inexistente', () => {
-    const foiRemovido = gerente.removerCliente(999, clientes);
-    expect(foiRemovido).toBe(false);
-  });
+  // it('não deve remover um cliente inexistente', () => {
+  //   const foiRemovido = gerente.removerCliente(999, clientes);
+  //   expect(foiRemovido).toBe(false);
+  // });
 
   // it('deve abrir uma conta corrente para um cliente', () => {
   //   const cliente = new Cliente(1, 'Beatriz');

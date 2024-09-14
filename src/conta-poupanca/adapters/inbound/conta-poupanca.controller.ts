@@ -24,7 +24,7 @@ export class ContaPoupancaController {
     },
   ) {
     const cliente = await this.clienteService.obterCliente(contaDto.clienteId);
-    const gerente =  this.gerenteService.obterGerente(contaDto.gerenteId);
+    const gerente =  await this.gerenteService.obterGerente(contaDto.gerenteId);
 
     if (!cliente) {
       return { message: 'Cliente não encontrado' };

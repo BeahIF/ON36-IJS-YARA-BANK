@@ -1,31 +1,55 @@
-import { Gerente } from '../adapters/outbound/gerente.model';
+import { GerenteEntity } from '../../db/entities/gerente.entity';
+import { GerenteORMRepository } from '../repository/orm/gerenteORM.repository';
 import { GerenteService } from './gerente.service';
 import { NotFoundException } from '@nestjs/common';
+import { v4 as uuid } from 'uuid';
 
 describe('GerenteService', () => {
   let service: GerenteService;
+  let repository: GerenteORMRepository
 
   beforeEach(() => {
-    service = new GerenteService();
+    repository = {
+      save: jest.fn(),
+      findOne: jest.fn(),
+    } as unknown as GerenteORMRepository;
+    service = new GerenteService(repository);
   });
 
-  it('deve adicionar um gerente', () => {
-    const gerente = new Gerente(1, 'Carlos');
-    service.adicionarGerente(gerente);
+  it('deve adicionar um gerente', async () => {
+    const gerente = {id:uuid(), nome: 'Carlos' };
+    const gerenteSalvo = { ...gerente, id: uuid(), contas: [] } as GerenteEntity;
 
-    expect(service['gerentes'].length).toBe(1);
-    expect(service['gerentes'][0]).toBe(gerente);
+    // Mock do método save do GerenteRepository
+    jest.spyOn(repository, 'save').mockResolvedValue(gerenteSalvo);
+
+    const result = await service.adicionarGerente(gerente);
+
+    expect(repository.save).toHaveBeenCalledWith({
+      nome: 'Carlos',
+      id: expect.any(String),  // Verifica se um UUID é gerado
+      contas: [],
+    });
+    expect(result).toEqual(gerenteSalvo);
   });
 
-  it('deve obter um gerente pelo ID', () => {
-    const gerente = new Gerente(1, 'Carlos');
-    service.adicionarGerente(gerente);
+  it('deve obter um gerente pelo ID', async () => {
+    const gerenteEncontrado = { nome: 'Carlos', id: 1, contas: [] } as unknown as GerenteEntity;
 
-    const gerenteEncontrado = service.obterGerente(1);
-    expect(gerenteEncontrado).toBe(gerente);
+    // Mock do método findOne do GerenteRepository
+    jest.spyOn(repository, 'findOne').mockResolvedValue(gerenteEncontrado);
+
+    const result = await service.obterGerente(1);
+
+    expect(repository.findOne).toHaveBeenCalledWith(1);
+    expect(result).toEqual(gerenteEncontrado);
   });
 
-  it('deve lançar um erro ao tentar obter um gerente inexistente', () => {
-    expect(() => service.obterGerente(999)).toThrow(NotFoundException);
+  it('deve lançar um erro ao tentar obter um gerente inexistente', async () => {
+    // Mock para o caso de gerente não encontrado
+    jest.spyOn(repository, 'findOne').mockResolvedValue(null);
+
+    await expect(service.obterGerente(999)).rejects.toThrow(NotFoundException);
+    expect(repository.findOne).toHaveBeenCalledWith(999);
   });
 });

@@ -31,7 +31,7 @@ describe('ContaCorrenteController', () => {
 
   it('deve criar uma conta corrente', () => {
     const cliente = new Cliente(1, 'Beatriz');
-    const gerente = new Gerente(1, 'Carlos');
+    const gerente = new Gerente('1', 'Carlos');
     const contaDto = {
       numeroConta: 123,
       limiteChequeEspecial: 500,
@@ -40,7 +40,7 @@ describe('ContaCorrenteController', () => {
     };
 
     jest.spyOn(clienteService, 'obterCliente').mockResolvedValue(cliente);
-    jest.spyOn(gerenteService, 'obterGerente').mockReturnValue(gerente);
+    jest.spyOn(gerenteService, 'obterGerente').mockResolvedValue(gerente);
     jest.spyOn(service, 'criarConta').mockImplementation(() => {});
 
     const result = controller.criarConta(contaDto);
@@ -51,7 +51,7 @@ describe('ContaCorrenteController', () => {
   });
 
   it('deve obter uma conta corrente pelo número', () => {
-    const conta = new ContaCorrente(123, 500, new Cliente(1, 'Beatriz'), new Gerente(1, 'Carlos'));
+    const conta = new ContaCorrente(123, 500, new Cliente(1, 'Beatriz'), new Gerente('1', 'Carlos'));
     jest.spyOn(service, 'obterConta').mockReturnValue(conta);
 
     const result = controller.obterConta(123);
@@ -60,7 +60,7 @@ describe('ContaCorrenteController', () => {
   });
 
   it('deve realizar um depósito', () => {
-    const conta = new ContaCorrente(123, 500, new Cliente(1, 'Beatriz'), new Gerente(1, 'Carlos'));
+    const conta = new ContaCorrente(123, 500, new Cliente(1, 'Beatriz'), new Gerente('1', 'Carlos'));
     jest.spyOn(service, 'obterConta').mockReturnValue(conta);
     jest.spyOn(service, 'depositar').mockImplementation(() => {});
 
@@ -70,7 +70,7 @@ describe('ContaCorrenteController', () => {
   });
 
   it('deve realizar um saque', () => {
-    const conta = new ContaCorrente(123, 500, new Cliente(1, 'Beatriz'), new Gerente(1, 'Carlos'));
+    const conta = new ContaCorrente(123, 500, new Cliente(1, 'Beatriz'), new Gerente('1', 'Carlos'));
     jest.spyOn(service, 'obterConta').mockReturnValue(conta);
     // jest.spyOn(service, 'sacar').mockReturnValue(true);
 
@@ -80,8 +80,8 @@ describe('ContaCorrenteController', () => {
   });
 
   it('deve realizar uma transferência', () => {
-    const contaOrigem = new ContaCorrente(123, 500, new Cliente(1, 'Beatriz'), new Gerente(1, 'Carlos'));
-    const contaDestino = new ContaCorrente(456, 1000, new Cliente(2, 'Ana'), new Gerente(1, 'Carlos'));
+    const contaOrigem = new ContaCorrente(123, 500, new Cliente(1, 'Beatriz'), new Gerente('1', 'Carlos'));
+    const contaDestino = new ContaCorrente(456, 1000, new Cliente(2, 'Ana'), new Gerente('1', 'Carlos'));
     jest.spyOn(service, 'obterConta').mockImplementation((numeroConta) => 
       numeroConta === 123 ? contaOrigem : contaDestino
     );

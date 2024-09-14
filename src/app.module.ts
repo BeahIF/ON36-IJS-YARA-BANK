@@ -15,6 +15,9 @@ import { ClienteRepository } from './cliente/repository/cliente.repository';
 import { ClienteORMRepository } from './cliente/repository/orm/clienteORM.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClienteEntity } from './db/entities/cliente.entity';
+import { ContaEntity } from './db/entities/conta.entity';
+import { GerenteEntity } from './db/entities/gerente.entity';
+import { GerenteModule } from './gerente/gerente.module';
 
 @Module({
   imports: [ConfigModule.forRoot(), 
@@ -28,9 +31,9 @@ import { ClienteEntity } from './db/entities/cliente.entity';
           database: 'postgres',
           synchronize: true,
           logging: false,
-          entities: [ClienteEntity],
+          entities: [ClienteEntity, ContaEntity, GerenteEntity],
       })
-    }), ClienteModule],
+    }), ClienteModule, GerenteModule],
   // controllers: [
   //   ContaCorrenteController,
   //   ContaPoupancaController,

@@ -2,20 +2,20 @@ import { Cliente } from 'src/cliente/adapters/outbound/cliente.model';
 import { ContaCorrente, ContaPoupanca, IContaBancaria } from 'src/conta.model';
 
 export class Gerente {
-  constructor(public id: number, public nome: string) {}
+  constructor( public nome: string,public id?: string,) {}
 
-  adicionarCliente(cliente: Cliente, clientes: Cliente[]): void {
-    clientes.push(cliente);
-  }
+  // adicionarCliente(cliente: Cliente, clientes: Cliente[]): void {
+  //   clientes.push(cliente);
+  // }
 
-  removerCliente(idCliente: number, clientes: Cliente[]): boolean {
-    const index = clientes.findIndex((cliente) => cliente.id === idCliente);
-    if (index !== -1) {
-      clientes.splice(index, 1);
-      return true;
-    }
-    return false;
-  }
+  // removerCliente(idCliente: number, clientes: Cliente[]): boolean {
+  //   const index = clientes.findIndex((cliente) => cliente.id === idCliente);
+  //   if (index !== -1) {
+  //     clientes.splice(index, 1);
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   // abrirConta(
   //   cliente: Cliente,

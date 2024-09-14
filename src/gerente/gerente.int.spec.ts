@@ -18,10 +18,10 @@ describe('GerenteController', () => {
   });
 
   it('deve criar um gerente', () => {
-    const gerenteDto = { id: 1, nome: 'Carlos' };
+    const gerenteDto = { id: '1', nome: 'Carlos' };
     const gerente = new Gerente(gerenteDto.id, gerenteDto.nome);
 
-    jest.spyOn(service, 'adicionarGerente').mockReturnValue(gerente);
+    jest.spyOn(service, 'adicionarGerente').mockResolvedValue(gerente);
 
     const result = controller.criarGerente(gerenteDto);
     expect(result).toEqual({ message: `Gerente ${gerente.nome} criado com sucesso.` });
@@ -29,8 +29,8 @@ describe('GerenteController', () => {
   });
 
   it('deve obter um gerente pelo ID', () => {
-    const gerente = new Gerente(1, 'Carlos');
-    jest.spyOn(service, 'obterGerente').mockReturnValue(gerente);
+    const gerente = new Gerente('1', 'Carlos');
+    jest.spyOn(service, 'obterGerente').mockResolvedValue(gerente);
 
     const result = controller.obterGerente(1);
     expect(result).toBe(gerente);

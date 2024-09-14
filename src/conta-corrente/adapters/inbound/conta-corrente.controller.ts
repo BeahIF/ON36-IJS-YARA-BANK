@@ -15,7 +15,7 @@ export class ContaCorrenteController {
   ) {}
 
   @Post('/criar')
-  criarConta(
+  async criarConta(
     @Body()
     contaDto: {
       numeroConta: number;
@@ -26,7 +26,7 @@ export class ContaCorrenteController {
   ) {
     const cliente = this.clienteService.obterCliente(contaDto.clienteId);
     console.log("cliente", cliente)
-    const gerente = this.gerenteService.obterGerente(contaDto.gerenteId);
+    const gerente = await this.gerenteService.obterGerente(contaDto.gerenteId);
 
     if (!cliente) {
       return { message: 'Cliente não encontrado' };

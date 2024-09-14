@@ -8,10 +8,11 @@ export class GerenteController {
   constructor(private readonly gerenteService: GerenteService) {}
 
   @Post('/criar')
-  criarGerente(@Body() gerenteDto: { id: number; nome: string }) {
-    const gerente = new Gerente(gerenteDto.id, gerenteDto.nome);
-    this.gerenteService.adicionarGerente(gerente);
-    return { message: `Gerente ${gerente.nome} criado com sucesso.` };
+  async criarGerente(@Body() gerenteDto: { nome: string }) {
+    const gerente = new Gerente( gerenteDto.nome);
+    const createdGerente = await this.gerenteService.adicionarGerente(gerente);
+    console.log(createdGerente)
+    return { message: `Gerente ${gerente.nome}, ${createdGerente.id} criado com sucesso.` };
   }
 
   @Get('/:id')
